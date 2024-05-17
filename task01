@@ -1,0 +1,55 @@
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function playGame() {
+    let score = 0;
+    let playAgain = true;
+
+    while (playAgain) {
+        let randomNumber = getRandomNumber(1, 100);
+        let attemptsLeft = 10;
+        let guessedCorrectly = false;
+
+        alert("Guess the number between 1 and 100. You have 10 attempts.");
+
+        while (attemptsLeft > 0) {
+            let userGuess = prompt(`Enter your guess (${attemptsLeft} attempts left):`);
+            if (userGuess === null) {
+                alert("Game cancelled.");
+                return;
+            }
+            
+            userGuess = parseInt(userGuess);
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                alert("Please enter a valid number between 1 and 100.");
+                continue;
+            }
+
+            attemptsLeft--;
+
+            if (userGuess === randomNumber) {
+                alert("Congratulations! You guessed the correct number!");
+                score += attemptsLeft;
+                guessedCorrectly = true;
+                break;
+            } else if (userGuess > randomNumber) {
+                alert("Too high! Try again.");
+            } else {
+                alert("Too low! Try again.");
+            }
+        }
+
+        if (!guessedCorrectly) {
+            alert(`Game over! The correct number was ${randomNumber}.`);
+        }
+
+        alert(`Your score is: ${score}`);
+        playAgain = confirm("Do you want to play again?");
+    }
+
+    alert("Thank you for playing!");
+}
+
+playGame();
